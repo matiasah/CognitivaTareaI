@@ -1,49 +1,26 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-// Material
-import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatSidenavModule,
-  MatMenuModule,
-  MatIconModule,
-  MatCardModule,
-  MatToolbarModule
-} from '@angular/material';
+import { routing, appRoutingProviders } from './app.routing';
+import { RootComponent } from './components/root/root.component';
+import { MaterializeModule } from 'angular2-materialize';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RootComponent
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-
-    // Material
-    MatButtonModule,
-    MatCheckboxModule,
-    MatSidenavModule,
-    MatMenuModule,
-    MatIconModule,
-    MatCardModule,
-    MatToolbarModule
+    MaterializeModule,
+    routing
   ],
-  exports: [
-
-    // Material
-    MatButtonModule,
-    MatCheckboxModule,
-    MatSidenavModule,
-    MatMenuModule,
-    MatIconModule,
-    MatCardModule,
-    MatToolbarModule
+  exports: [],
+  providers: [
+    appRoutingProviders
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
