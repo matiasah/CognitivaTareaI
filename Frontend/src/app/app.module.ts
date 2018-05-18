@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { routing, appRoutingProviders } from './app.routing';
 import { RootComponent } from './components/root/root.component';
 import { MaterializeModule } from 'angular2-materialize';
+import { ProcesarTextoComponent } from './components/procesartexto/procesartexto.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RootComponent
+    RootComponent,
+    ProcesarTextoComponent
   ],
   imports: [
     BrowserModule,
