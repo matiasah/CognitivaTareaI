@@ -1,0 +1,28 @@
+<!-- Side nav -->
+<ul id="slide-out" class="side-nav fixed">
+    <li>
+        <a class="subheader">Procesamiento</a>
+    </li>
+    <li>
+        <a href="#!">
+            <i class="material-icons">text_fields</i>Procesar Texto
+        </a>
+    </li>
+    <li>
+        <a href="#!">
+            <i class="material-icons">attach_file</i>Subir Documento
+        </a>
+    </li>
+</ul>
+
+<!-- Nav -->
+<nav class="blue-grey darken-2">
+    <a materialize="sideNav" class="sidenav-trigger button-collapse" href="#" data-activates="slide-out">
+        <i class="material-icons">menu</i>
+    </a>
+</nav>
+
+<!-- Contenido -->
+<main>
+    <router-outlet></router-outlet>
+</main>
