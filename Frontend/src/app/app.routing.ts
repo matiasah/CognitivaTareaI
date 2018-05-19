@@ -2,6 +2,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { RootComponent } from "./components/root/root.component";
 import { ProcesarTextoComponent } from './components/procesartexto/procesartexto.component';
+import { ProcesarArchivoComponent } from './components/procesararchivo/procesararchivo.component';
 
 const appRoutes: Routes = [
     {
@@ -11,6 +12,10 @@ const appRoutes: Routes = [
             {
                 path: '',
                 component: ProcesarTextoComponent
+            },
+            {
+                path: 'archivo',
+                component: ProcesarArchivoComponent
             }
         ]
     }
