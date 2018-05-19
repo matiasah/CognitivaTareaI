@@ -44,6 +44,11 @@
             <version>3.9.1</version>
             <type>javadoc</type>
         </dependency>
+        <dependency>
+            <groupId>stanford-ner</groupId>
+            <artifactId>stanford-ner</artifactId>
+            <version>3.9.1</version>
+        </dependency>
     </dependencies>
     
 </project>
