@@ -1,6 +1,8 @@
 package cl.ufro.cognitiva.t1.backend.controller;
 
-import cl.ufro.cognitiva.t1.backend.controller.model.TagOracion;
+import cl.ufro.cognitiva.t1.backend.model.Oracion;
+import cl.ufro.cognitiva.t1.backend.model.Palabra;
+import cl.ufro.cognitiva.t1.backend.model.Texto;
 import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
@@ -15,75 +17,84 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * 
+ * @author matia
+ */
 @RestController
 public class TaggerController {
-    
-    
-    /**
-     * Metodo para retornar una lista con los nombres de los archivos que contienen
-     * los tagger
-     * @return Lista con nombres de archivos tagger
-     */
-    @GetMapping("tagger")
-    public List<String> index() {
-        
-        List<String> taggers = new ArrayList<>();
-        
-        //Lee el contenido de la carpeta models
-        File folder = new File("models");
-        File [] files = folder.listFiles();
-        
-        for (int i = 0; i < files.length; i++){
-            taggers.add( files[i].getName() );            
-        }
-        
-        //retorna una lista con el nombre de todos los tag
-        return taggers;
-        
-    }
-    
     
     /**
      * Metodo que recive la oracion y aplica el etiquetado de categorias 
      * gramaticales
-     * @param oracion Modelo que representa el tagg a utilizar y la oracion para
-     * aplicar el etiuetado
+     * @param texto
      * @return 
      */
     @PostMapping("tagger")
-    public List<List<String []>> taggerize(@RequestBody TagOracion oracion) {
+    public List<Oracion> taggerize(
+            @RequestBody Texto texto
+        ) {
         
-        //Utiliza el archivo para el etiquetado segun el parametro que se recive
-        MaxentTagger tagger = new MaxentTagger("models/" + oracion.getIdioma());
-                
+        // Utiliza el archivo para el etiquetado segun el parametro que se recive
+        MaxentTagger tagger = new MaxentTagger("models/english-bidirectional-distsim.tagger");
         
-        List<List<HasWord>> sentences = MaxentTagger.tokenizeText( new StringReader( oracion.getTexto() ) );
-        List<List<String []>> tSentences = new ArrayList<>();
+        // Obtener una lista de oraciones
+        List<List<HasWord>> sentences = MaxentTagger.tokenizeText( new StringReader( texto.getContenido() ) );
+        
+        // Lista de oraciones
+        List<Oracion> oraciones = new ArrayList<>();
         
         for ( List<HasWord> sentence : sentences ) {
+            
+            // Obtener tags de una oración
             List<TaggedWord> tSentence = tagger.tagSentence(sentence);
-            List<String[]> tsubSentences = new ArrayList<>();
+            
+            // Lista de tags para la oración
+            Oracion oracion = new Oracion();
+            
+            // Por cada tag
             for ( TaggedWord tWord : tSentence ) {
-                tsubSentences.add( new String[] { tWord.word(), tWord.tag() } );
+                
+                // Crear una palabra nueva
+                Palabra palabra = new Palabra( tWord.tag(), tWord.word() );
+                
+                // Agregar palabra a oracion
+                oracion.getPalabras().add( palabra );
+                
             }
-            tSentences.add(tsubSentences);
+            
+            // Agregar oracion a la lista de oraciones
+            oraciones.add(oracion);
+            
         }
         
-        return tSentences;
+        // Enviar datos
+        return oraciones;
         
     }
     
-    
+    /**
+     * 
+     * @param file
+     * @return
+     * @throws Exception 
+     */
     @PostMapping("tagger-file")
-    public String uploadFile(@RequestParam("file") MultipartFile file){
+    public List<Oracion> taggerize(
+            @RequestParam("file") MultipartFile file
+        ) throws Exception {
         
         if (!file.isEmpty()) {
-            System.out.println(file.getContentType());            
-            System.out.println(file.getOriginalFilename());
-            return "okidoki";
+            
+            Texto texto = new Texto();
+            
+            texto.setContenido( new String( file.getBytes() ) );
+            
+            return this.taggerize( texto );
+            
         }
         
-        return "no hay mano";
+        return null;
     }
     
 }

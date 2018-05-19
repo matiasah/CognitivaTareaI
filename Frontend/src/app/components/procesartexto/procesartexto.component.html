@@ -5,7 +5,7 @@
         <div class="col s12 grey lighten-3 z-depth-1">
             <label for="entrada">Entrada</label>
             <div id="entrada" class="input-field">
-                <textarea class="materialize-textarea"></textarea>
+                <textarea #textarea class="materialize-textarea"></textarea>
             </div>
         </div>
     </div>
@@ -17,26 +17,25 @@
             <!-- Part-Of-Speech-->
             <label for="pos">Part-Of-Speech</label>
             <div id="pos" class="row white" style="border: grey 1px solid">
-                <div style="display: inline-block">
-                    <div class="center-align" style="top: 10px; font-size: 12px; margin: -3px">
-                        tag1
+
+                <div *ngFor="let oracion of oraciones">
+                    <div *ngFor="let palabra of oracion.palabras" style="display: inline-block; margin: 3px">
+                        <div style="display: inline-block">
+                            <div class="center-align" style="top: 8px; font-size: 10px; margin: -4px">
+                                {{palabra.tag}}
+                            </div>
+                            {{palabra.palabra}}
+                        </div>
                     </div>
-                    Palabra 1
-                </div>
-                <div style="display: inline-block; margin-left: 3px">
-                    <div class="center-align" style="top: 10px; font-size: 12px; margin: -3px">
-                        tag2
-                    </div>
-                    Palabra 2
                 </div>
             </div>
 
             <!-- Named Entity Recognition -->
             <label for="ner">Named-Entity-Recognition</label>
             <ul id="ner" class="row white" style="border: grey 1px solid; padding: 5px">
-                <li>A</li>
-                <li>B</li>
-                <li>C</li>
+                <li *ngFor="let entidad of entidades">
+                    {{entidad.nombre}}
+                </li>
             </ul>
 
             <!-- Sustantivos -->
@@ -65,7 +64,7 @@
     <!-- Enviar -->
     <div class="col s12">
         <div class="divider" style="margin-top: 15px; margin-bottom: 15px"></div>
-        <a class="btn">Enviar</a>
+        <a class="btn" (click)="enviar()">Enviar</a>
     </div>
 
 </form>
