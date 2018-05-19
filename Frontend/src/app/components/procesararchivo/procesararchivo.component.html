@@ -1,8 +1,10 @@
 <form class="card-panel row">
 
+    <!-- Entrada -->
     <div class="col s6">
         <div class="col s12 grey lighten-3 z-depth-1">
-            <div class="file-field input-field">
+            <label for="entrada">Entrada</label>
+            <div id="entrada" class="file-field input-field">
                 <div class="btn">
                     <span>Archivo</span>
                     <input type="file">
@@ -14,15 +16,59 @@
         </div>
     </div>
 
+    <!-- Salida -->
     <div class="col s6">
         <div class="col s12 grey lighten-3 z-depth-1">
-            <div class="input-field">
-                <textarea disabled id="textarea1" class="materialize-textarea"></textarea>
-                <label for="textarea1">Salida</label>
+
+            <!-- Part-Of-Speech-->
+            <label for="pos">Part-Of-Speech</label>
+            <div id="pos" class="row white" style="border: grey 1px solid">
+                <div style="display: inline-block">
+                    <div class="center-align" style="top: 10px; font-size: 12px; margin: -3px">
+                        tag1
+                    </div>
+                    Palabra 1
+                </div>
+                <div style="display: inline-block; margin-left: 3px">
+                    <div class="center-align" style="top: 10px; font-size: 12px; margin: -3px">
+                        tag2
+                    </div>
+                    Palabra 2
+                </div>
             </div>
+
+            <!-- Named Entity Recognition -->
+            <label for="ner">Named-Entity-Recognition</label>
+            <ul id="ner" class="row white" style="border: grey 1px solid; padding: 5px">
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+            </ul>
+
+            <!-- Sustantivos -->
+            <div class="col s6">
+                <label for="sustantivos">Sustantivos</label>
+                <ul id="sustantivos" class="white" style="border: grey 1px solid; padding: 5px">
+                    <li>A</li>
+                    <li>B</li>
+                    <li>C</li>
+                </ul>
+            </div>
+
+            <!-- Sustantivos -->
+            <div class="col s6">
+                <label for="verbos">Verbos</label>
+                <ul id="verbos" class="white" style="border: grey 1px solid; padding: 5px">
+                    <li>A</li>
+                    <li>B</li>
+                    <li>C</li>
+                </ul>
+            </div>
+
         </div>
     </div>
 
+    <!-- Enviar -->
     <div class="col s12">
         <div class="divider" style="margin-top: 15px; margin-bottom: 15px"></div>
         <a class="btn">Enviar</a>
