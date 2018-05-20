@@ -20,4 +20,13 @@ export class TaggerService {
         return this.http.post<Oracion[]>(GLOBAL.url + "tagger", texto);
     }
 
+    public taggerizeFile(file: File): Observable<Oracion[]> {
+
+        let form: FormData = new FormData();
+
+        form.append("file", file);
+
+        return this.http.post<Oracion[]>(GLOBAL.url + "tagger-file", form);
+    }
+
 }

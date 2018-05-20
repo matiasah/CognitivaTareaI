@@ -20,4 +20,13 @@ export class NERService {
         return this.http.post<Entidad[]>(GLOBAL.url + "ner", texto);
     }
 
+    public listFile(file: File): Observable<Entidad[]> {
+        
+        let form: FormData = new FormData();
+
+        form.append("file", file);
+
+        return this.http.post<Entidad[]>(GLOBAL.url + "ner-file", form);
+    }
+
 }

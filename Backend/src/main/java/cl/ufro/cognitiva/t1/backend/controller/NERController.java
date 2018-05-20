@@ -1,6 +1,7 @@
 package cl.ufro.cognitiva.t1.backend.controller;
 
 import cl.ufro.cognitiva.t1.backend.model.Entidad;
+import cl.ufro.cognitiva.t1.backend.model.Texto;
 import edu.stanford.nlp.ie.AbstractSequenceClassifier;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.util.Triple;
@@ -8,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class NERController {
@@ -21,13 +24,15 @@ public class NERController {
      * @return
      */
     @PostMapping("ner")
-    public List<Entidad> list(@RequestBody String texto) {
+    public List<Entidad> list(
+            @RequestBody Texto texto
+        ) {
 
         // Instanciar classifier
         AbstractSequenceClassifier              classifier      = CRFClassifier.getClassifierNoExceptions("classifiers/english.muc.7class.distsim.crf.ser.gz");
         
         // Obtener lista de tripletas (del texto)
-        List<Triple<String, Integer, Integer>>  entidades       = classifier.classifyToCharacterOffsets(texto);
+        List<Triple<String, Integer, Integer>>  entidades       = classifier.classifyToCharacterOffsets(texto.getContenido());
         
         // Crear lista de entidades
         ArrayList<Entidad>                      listaEntidades  = new ArrayList();
@@ -39,7 +44,7 @@ public class NERController {
             Entidad ent = new Entidad();
             
             // Fijarle nombre
-            ent.setNombre( texto.substring(entidad.second, entidad.third) );
+            ent.setNombre( texto.getContenido().substring(entidad.second, entidad.third) );
             ent.setTipo( entidad.first );
             
             // Guardar en lista
@@ -48,6 +53,25 @@ public class NERController {
         }
 
         return listaEntidades;
+        
+    }
+    
+    @PostMapping("ner-file")
+    public List<Entidad> list(
+            @RequestParam("file") MultipartFile file
+        ) throws Exception {
+        
+        if (file != null && !file.isEmpty()) {
+            
+            Texto texto = new Texto();
+            
+            texto.setContenido( new String( file.getBytes() ) );
+            
+            return this.list( texto );
+            
+        }
+        
+        return null;
         
     }
 

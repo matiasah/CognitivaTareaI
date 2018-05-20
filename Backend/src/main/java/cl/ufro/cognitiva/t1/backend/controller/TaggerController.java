@@ -6,11 +6,9 @@ import cl.ufro.cognitiva.t1.backend.model.Texto;
 import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
-import java.io.File;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -84,7 +82,7 @@ public class TaggerController {
             @RequestParam("file") MultipartFile file
         ) throws Exception {
         
-        if (!file.isEmpty()) {
+        if (file != null && !file.isEmpty()) {
             
             Texto texto = new Texto();
             

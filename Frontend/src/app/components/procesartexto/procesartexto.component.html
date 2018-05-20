@@ -42,9 +42,7 @@
             <div class="col s6">
                 <label for="sustantivos">Sustantivos</label>
                 <ul id="sustantivos" class="white" style="border: grey 1px solid; padding: 5px">
-                    <li>A</li>
-                    <li>B</li>
-                    <li>C</li>
+                    <li *ngFor="let sustantivo of sustantivos">{{sustantivo.palabra}}</li>
                 </ul>
             </div>
 
@@ -52,9 +50,7 @@
             <div class="col s6">
                 <label for="verbos">Verbos</label>
                 <ul id="verbos" class="white" style="border: grey 1px solid; padding: 5px">
-                    <li>A</li>
-                    <li>B</li>
-                    <li>C</li>
+                    <li *ngFor="let verbo of verbos">{{verbo.palabra}}</li>
                 </ul>
             </div>
 
